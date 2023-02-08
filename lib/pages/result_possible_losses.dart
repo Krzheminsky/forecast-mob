@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
 import 'package:forecast/widgets/drawer.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +118,6 @@ class ResultPossibleLosses extends StatelessWidget {
                                   bottom: 10.0,
                                   top: 10.0,
                                   right: 10.0),
-                              // height: 24,
                               child: Text(populationPZHZ.toStringAsFixed(3),
                                   textScaleFactor: 1)),
                         ]),
@@ -143,7 +141,6 @@ class ResultPossibleLosses extends StatelessWidget {
                                   bottom: 10.0,
                                   top: 10.0,
                                   right: 10.0),
-                              // height: 24,
                               child: Text(numberAffected.toStringAsFixed(3),
                                   textScaleFactor: 1)),
                         ]),
@@ -167,7 +164,6 @@ class ResultPossibleLosses extends StatelessWidget {
                                   bottom: 10.0,
                                   top: 10.0,
                                   right: 10.0),
-                              // height: 24,
                               child: Text(duration.toStringAsFixed(3),
                                   textScaleFactor: 1)),
                         ]),
@@ -191,7 +187,6 @@ class ResultPossibleLosses extends StatelessWidget {
                                   bottom: 10.0,
                                   top: 10.0,
                                   right: 10.0),
-                              // height: 24,
                               child: Text(transferSpeed.toStringAsFixed(3),
                                   textScaleFactor: 1)),
                         ]),
@@ -238,7 +233,6 @@ class ResultPossibleLosses extends StatelessWidget {
                                   bottom: 10.0,
                                   top: 10.0,
                                   right: 10.0),
-                              // height: 24,
                               child: Text(dissemination, textScaleFactor: 0.9)),
                         ]),
                   ],
@@ -256,7 +250,7 @@ class ResultPossibleLosses extends StatelessWidget {
                   Navigator.pushNamed(context, '/');
                 },
                 icon: const Icon(Icons.settings),
-                label: const Text('Клацніть, щоб перейти до мапи'),
+                label: const Text('Перейти до мапи'),
               ),
             ],
           )),

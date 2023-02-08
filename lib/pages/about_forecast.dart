@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
 import 'package:forecast/widgets/drawer.dart';
 
@@ -15,7 +13,6 @@ class AboutForecast extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                   margin: const EdgeInsets.only(

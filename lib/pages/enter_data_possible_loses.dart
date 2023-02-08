@@ -16,8 +16,6 @@ class EnterDataPossibleLosses extends StatefulWidget {
 }
 
 class _EnterDataPossibleLossesState extends State<EnterDataPossibleLosses> {
-  // final timeSinceAccident = TextEditingController(text: '240');
-
   @override
   Widget build(BuildContext context) {
     String startTimeSinceAccident = context
@@ -232,7 +230,7 @@ class _EnterDataPossibleLossesState extends State<EnterDataPossibleLosses> {
                 );
               },
               icon: const Icon(Icons.settings),
-              label: const Text('Клацніть, щоб перейти до результатів'),
+              label: const Text('Перейти до результатів'),
             ),
           ],
         )),

@@ -506,7 +506,7 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                 );
               },
               icon: const Icon(Icons.settings),
-              label: const Text('Клацніть, щоб перейти до результатів'),
+              label: const Text('Перейти до результатів'),
             ),
           ],
         ),

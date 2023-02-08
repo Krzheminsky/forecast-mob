@@ -38,7 +38,7 @@ class InformationAboutChemikel extends StatelessWidget {
                   Navigator.pushNamed(context, '/');
                 },
                 icon: const Icon(Icons.settings),
-                label: const Text('Клацніть, щоб перейти до мапи'),
+                label: const Text('Перейти до мапи'),
               ),
             ],
           )),

@@ -131,7 +131,6 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            // Text(cloudOne().toString()),
             Text(
               'Координати: ${x.toStringAsFixed(3)},  ${y.toStringAsFixed(3)}',
               textAlign: TextAlign.center,
@@ -180,7 +179,7 @@ class HomePage extends StatelessWidget {
                         fontSize: 12,
                       ),
                       labelPlacement: PolygonLabelPlacement.polylabel,
-                      isFilled: false, // By default it's false
+                      isFilled: false,
                       borderColor: Colors.green,
                       borderStrokeWidth: 3,
                     ),

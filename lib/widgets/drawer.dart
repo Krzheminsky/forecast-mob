@@ -5,7 +5,7 @@ import 'package:forecast/pages/home.dart';
 import 'package:forecast/pages/enter_data_possible_loses.dart';
 import 'package:forecast/pages/result_possible_losses.dart';
 import 'package:forecast/pages/information_about_chemicel.dart';
-// import 'package:forecast/pages/receiving_meteorological_data.dart';
+import 'package:forecast/pages/receiving_meteorological_data.dart';
 import 'package:forecast/pages/about_forecast.dart';
 
 Drawer buildDrawer(BuildContext context, String currentRoute) {
@@ -182,27 +182,27 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
             },
           ),
         ),
-        // Card(
-        //   elevation: 6,
-        //   child: ListTile(
-        //     title: const Text('Поточні метеодані'),
-        //     trailing: const Icon(
-        //       Icons.arrow_forward_ios,
-        //       size: 14,
-        //     ),
-        //     dense: true,
-        //     onTap: () {
-        //       Navigator.push(
-        //         context,
-        //         MaterialPageRoute(
-        //           builder: (context) {
-        //             return const ReceivingMeteorologicalData();
-        //           },
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
+        Card(
+          elevation: 6,
+          child: ListTile(
+            title: const Text('Поточні метеодані'),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            dense: true,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ReceivingMeteorologicalData();
+                  },
+                ),
+              );
+            },
+          ),
+        ),
         Card(
           color: Colors.yellow[200],
           elevation: 6,
