@@ -112,7 +112,7 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                     .read<GetVerticalStability>()
                     .changeVerticalStability(newValue.toString()),
                 decoration: const InputDecoration(
-                  labelText: 'Вибір хімічної речовини',
+                  labelText: 'Ступінь вертикальної стійкості',
                   labelStyle: TextStyle(
                     fontSize: 15,
                   ),

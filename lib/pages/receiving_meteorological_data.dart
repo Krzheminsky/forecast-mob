@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:forecast/calculate/data_calculate.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:forecast/pages/enter_data_chemicals.dart';
 
 class ReceivingMeteorologicalData extends StatelessWidget {
   static const String route = 'ReceivingMeteorologicalData';
@@ -319,11 +320,26 @@ class ReceivingMeteorologicalData extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
                 onPressed: () {
-                  // (context as Element).markNeedsBuild();
-                  Navigator.pushNamed(context, '/');
+                  context
+                      .read<GetVerticalStability>()
+                      .changeVerticalStability(verticalStability);
+
+                  context.read<GetWindSpeed>().changeWindSpeed(windspeed);
+                  context.read<GetTemperature>().changeTemperature(temperature);
+                  context
+                      .read<GetWindDirection>()
+                      .changeWindDirection(winddirection);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const EnterDataChemicals();
+                      },
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.settings),
-                label: const Text('Перейти до мапи'),
+                label: const Text('Внести показники до вихідних даних'),
               ),
             ],
           )),
