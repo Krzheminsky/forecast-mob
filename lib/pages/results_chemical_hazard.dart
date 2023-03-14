@@ -550,6 +550,7 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
                   context
                       .read<GetEvaporationTime>()
                       .changeEvaporationTime(globalDepth);
+                  context.read<GetZoom>().changeZoom(10);
                   Navigator.pushNamed(context, '/');
                 },
                 icon: const Icon(Icons.settings),
