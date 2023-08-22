@@ -20,6 +20,7 @@ class ReceivingMeteorologicalData extends StatelessWidget {
     double temperature = 0;
     double windspeed = 0;
     double winddirection = 0;
+    int weathercode = 0;
     String verticalStability = '';
     var now = DateTime.now();
     var formatter = DateFormat('yyyy-MM-dd');
@@ -42,9 +43,9 @@ class ReceivingMeteorologicalData extends StatelessWidget {
       final jsonString = jsonStrings.join();
       final json = jsonDecode(jsonString);
       temperature = json["current_weather"]["temperature"];
-      int weathercode = json["current_weather"]["weathercode"];
+      weathercode = json["current_weather"]["weathercode"];
       windspeed = json["current_weather"]["windspeed"];
-      winddirection = json["current_weather"]["winddirection"];
+      winddirection = json["current_weather"]["winddirection"].toDouble();
 
       String currentTime = json["current_weather"]["time"];
       var currentHourly = json["hourly"]["time"].indexOf(currentTime);

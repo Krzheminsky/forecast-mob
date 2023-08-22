@@ -8,8 +8,8 @@ import 'package:forecast/pages/result_possible_losses.dart';
 import 'package:forecast/pages/information_about_chemicel.dart';
 import 'package:forecast/pages/receiving_meteorological_data.dart';
 import 'package:forecast/pages/about_forecast.dart';
-import 'package:provider/provider.dart';
 import 'calculate/data_calculate.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
