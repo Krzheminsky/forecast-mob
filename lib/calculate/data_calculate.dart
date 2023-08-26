@@ -12,7 +12,7 @@ class GetNameChemical with ChangeNotifier {
 }
 
 class GetVerticalStability with ChangeNotifier {
-  String _name = "Ізотермія";
+  String _name = "Інверсія";
   String get getVerticalStability => _name;
   void changeVerticalStability(String newName) {
     _name = newName;
@@ -244,3 +244,44 @@ class GetZoom with ChangeNotifier {
     notifyListeners();
   }
 }
+
+// ********************** Додаємо дані до розрахунку комплексного показника
+
+class GetSeason with ChangeNotifier {
+  String _name = "Літо";
+  String get getSeason => _name;
+  void changeSeason(String newName) {
+    _name = newName;
+    notifyListeners();
+  }
+}
+
+class GetRelief with ChangeNotifier {
+  String _name = "Рівнинний";
+  String get getRelief => _name;
+  void changeRelief(String newName) {
+    _name = newName;
+    notifyListeners();
+  }
+}
+
+class GetTypeOfVegetation with ChangeNotifier {
+  String _name = "Лісиста";
+  String get getTypeOfVegetationf => _name;
+  void changeTypeOfVegetation(String newName) {
+    _name = newName;
+    notifyListeners();
+  }
+}
+
+class GetTypeOfForest with ChangeNotifier {
+  String _name = "Хвойні";
+  String get getTypeOfForest => _name;
+  void changeTypeOfForest(String newName) {
+    _name = newName;
+    notifyListeners();
+  }
+}
+
+
+// ********************** Додаємо дані до розрахунку комплексного показника

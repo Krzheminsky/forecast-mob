@@ -20,6 +20,7 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
   Widget build(BuildContext context) {
     Map<String, dynamic> mapChemical = {};
     // ignore: unused_local_variable
+
     double? calcData;
     double coeficientA = 0;
     double coeficientB1 = 0;
@@ -42,6 +43,8 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
     double areaFirst = 0;
     double areaSecond = 0;
     double areaPZHZ = 0;
+    double complexIndicator = 0;
+    double terrainInfluenceCoefficient = 0;
 
     listChemicel() {
       String nameChimical = context.watch<GetNameChemical>().getName;
@@ -219,15 +222,297 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
 
       areaAccident = 3.1415 * pow(radiusAccident, 2);
 
-      double coefficient = context.watch<GetCoefficient>().getCoefficient;
+      // ********************************Вставити розрахунок коефіцієнту*****************
+
+      String typeForest = context.watch<GetTypeOfForest>().getTypeOfForest;
+      String relief = context.watch<GetRelief>().getRelief;
+      String season = context.watch<GetSeason>().getSeason;
+      String typeVegetation =
+          context.watch<GetTypeOfVegetation>().getTypeOfVegetationf;
+
+      if (season == 'Літо') {
+        if (typeVegetation == 'Лісиста') {
+          if (typeForest == 'Хвойні') {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 1.1;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 1.2;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 1.3;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 1.4;
+            } else {
+              complexIndicator = 1.6;
+            }
+          } else {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.6;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.8;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 1;
+            } else {
+              complexIndicator = 1.2;
+            }
+          }
+        } else if (typeVegetation == 'Лісисто-степова') {
+          if (typeForest == 'Хвойні') {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.6;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.8;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 1;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 1.1;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 1.2;
+            } else {
+              complexIndicator = 1.5;
+            }
+          } else {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.4;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.6;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 0.8;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 0.9;
+            } else {
+              complexIndicator = 1.1;
+            }
+          }
+        } else if (typeVegetation == 'Степова') {
+          if (relief == 'Рівнинний') {
+            complexIndicator = 0.3;
+          } else if (relief == 'Рівнинно-хвилястий') {
+            complexIndicator = 0.4;
+          } else if (relief == 'Рівнинно-горбистий') {
+            complexIndicator = 0.7;
+          } else if (relief == 'Горбисто-балочний') {
+            complexIndicator = 0.8;
+          } else if (relief == 'Горбистий') {
+            complexIndicator = 0.8;
+          } else {
+            complexIndicator = 1;
+          }
+        } else {
+          if (relief == 'Рівнинний') {
+            complexIndicator = 0.1;
+          } else if (relief == 'Рівнинно-хвилястий') {
+            complexIndicator = 0.2;
+          } else if (relief == 'Рівнинно-горбистий') {
+            complexIndicator = 0.4;
+          } else if (relief == 'Горбисто-балочний') {
+            complexIndicator = 0.5;
+          } else if (relief == 'Горбистий') {
+            complexIndicator = 0.6;
+          } else {
+            complexIndicator = 0.8;
+          }
+        }
+      } else {
+        if (typeVegetation == 'Лісиста') {
+          if (typeForest == 'Хвойні') {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 1.1;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 1.2;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 1.3;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 1.4;
+            } else {
+              complexIndicator = 1.6;
+            }
+          } else {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.4;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.6;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 0.7;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 1;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 0.9;
+            } else {
+              complexIndicator = 1.1;
+            }
+          }
+        } else if (typeVegetation == 'Лісисто-степова') {
+          if (typeForest == 'Хвойні') {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.5;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.7;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 0.8;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 0.9;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 1;
+            } else {
+              complexIndicator = 1.3;
+            }
+          } else {
+            if (relief == 'Рівнинний') {
+              complexIndicator = 0.2;
+            } else if (relief == 'Рівнинно-хвилястий') {
+              complexIndicator = 0.3;
+            } else if (relief == 'Рівнинно-горбистий') {
+              complexIndicator = 0.5;
+            } else if (relief == 'Горбисто-балочний') {
+              complexIndicator = 0.6;
+            } else if (relief == 'Горбистий') {
+              complexIndicator = 0.7;
+            } else {
+              complexIndicator = 1;
+            }
+          }
+        } else if (typeVegetation == 'Степова') {
+          if (relief == 'Рівнинний') {
+            complexIndicator = 0.1;
+          } else if (relief == 'Рівнинно-хвилястий') {
+            complexIndicator = 0.2;
+          } else if (relief == 'Рівнинно-горбистий') {
+            complexIndicator = 0.4;
+          } else if (relief == 'Горбисто-балочний') {
+            complexIndicator = 0.5;
+          } else if (relief == 'Горбистий') {
+            complexIndicator = 0.6;
+          } else {
+            complexIndicator = 0.9;
+          }
+        } else {
+          if (relief == 'Рівнинний') {
+            complexIndicator = 0.05;
+          } else if (relief == 'Рівнинно-хвилястий') {
+            complexIndicator = 0.1;
+          } else if (relief == 'Рівнинно-горбистий') {
+            complexIndicator = 0.3;
+          } else if (relief == 'Горбисто-балочний') {
+            complexIndicator = 0.5;
+          } else if (relief == 'Горбистий') {
+            complexIndicator = 0.6;
+          } else {
+            complexIndicator = 0.8;
+          }
+        }
+      }
+
+      if (complexIndicator == 0.05) {
+        terrainInfluenceCoefficient = 1;
+      } else if (complexIndicator == 0.1) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.8;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.8;
+        } else {
+          terrainInfluenceCoefficient = 0.9;
+        }
+      } else if (complexIndicator == 0.2) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.5;
+        } else {
+          terrainInfluenceCoefficient = 0.6;
+        }
+      } else if (complexIndicator == 0.3) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.4;
+        } else {
+          terrainInfluenceCoefficient = 0.5;
+        }
+      } else if (complexIndicator == 0.4) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.3;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.4;
+        } else {
+          terrainInfluenceCoefficient = 0.5;
+        }
+      } else if (complexIndicator == 0.5) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.3;
+        } else {
+          terrainInfluenceCoefficient = 0.4;
+        }
+      } else if (complexIndicator == 0.6) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.3;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.3;
+        } else {
+          terrainInfluenceCoefficient = 0.4;
+        }
+      } else if (complexIndicator == 0.7) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.2;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.3;
+        } else {
+          terrainInfluenceCoefficient = 0.4;
+        }
+      } else if (complexIndicator == 0.8) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.2;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.3;
+        } else {
+          terrainInfluenceCoefficient = 0.4;
+        }
+      } else if (complexIndicator == 0.9) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.2;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.2;
+        } else {
+          terrainInfluenceCoefficient = 0.3;
+        }
+      } else if (complexIndicator == 1.0) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.1;
+        } else if (vertical == 'ізотермія') {
+          terrainInfluenceCoefficient = 0.2;
+        } else {
+          terrainInfluenceCoefficient = 0.3;
+        }
+      } else if (complexIndicator == 1.1) {
+        if (vertical == 'конвекція') {
+          terrainInfluenceCoefficient = 0.1;
+        } else {
+          terrainInfluenceCoefficient = 0.2;
+        }
+      } else if (complexIndicator == 1.2) {
+        terrainInfluenceCoefficient = 0.1;
+      } else if (complexIndicator == 1.3) {
+        terrainInfluenceCoefficient = 0.1;
+      } else {
+        terrainInfluenceCoefficient = 0.05;
+      }
+
+      // ********************************Вставити розрахунок коефіцієнту*****************
+
+      // double coefficient = context.watch<GetCoefficient>().getCoefficient;
       if (primaCloud > 0) {
-        primaryDepth = (coefficient * primaCloud);
+        primaryDepth = (terrainInfluenceCoefficient * primaCloud);
       } else {
         primaryDepth = 0;
       }
 
       if (secCloud > 0) {
-        secondaryDepth = (coefficient * secCloud);
+        secondaryDepth = (terrainInfluenceCoefficient * secCloud);
       } else {
         secondaryDepth = 0;
       }
@@ -518,6 +803,32 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
                                   top: 10.0,
                                   right: 10.0),
                               child: Text(areaPZHZ.toStringAsFixed(3),
+                                  textScaleFactor: 1)),
+                        ]),
+                    TableRow(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 236, 239, 240),
+                        ),
+                        children: [
+                          Container(
+                              padding: const EdgeInsets.only(
+                                  left: 5.0,
+                                  bottom: 10.0,
+                                  top: 10.0,
+                                  right: 10.0),
+                              child: const Text(
+                                  "Коефіцієнт впливу місцевості Км",
+                                  textScaleFactor: 0.95)),
+                          Container(
+                              padding: const EdgeInsets.only(
+                                  left: 0,
+                                  bottom: 10.0,
+                                  top: 10.0,
+                                  right: 10.0),
+                              // height: 24,
+                              child: Text(
+                                  terrainInfluenceCoefficient
+                                      .toStringAsFixed(1),
                                   textScaleFactor: 1)),
                         ]),
                   ],

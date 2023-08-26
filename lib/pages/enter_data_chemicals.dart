@@ -52,8 +52,64 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
 
   var windDirection = 0;
 
+  // ********************** Додаємо дані до розрахунку комплексного показника
+
+  var typeOfVegetation = [
+    'Лісиста',
+    'Лісисто-степова',
+    'Степова',
+    'Напівпустельна',
+  ];
+
+  var relief = [
+    'Рівнинний',
+    'Рівнинно-хвилястий',
+    'Рівнинно-горбистий',
+    'Горбисто-балочний',
+    'Горбистий',
+    'Передгір’я',
+  ];
+
+  var season = [
+    'Літо',
+    'Зима',
+  ];
+
+  var typeOfForest = [
+    'Хвойні',
+    'Змішані'
+  ]; //визначаємо в залежності від typeOfVegetation
+
+  var valueForest = 'Хвойні';
+
+//   export const typeOfVegetation = [
+//     { name: 'Лісиста', typeOfForest: ['Хвойні', 'Змішані',] },
+//     { name: 'Лісисто-степова', typeOfForest: ['Хвойні', 'Листяні',] },
+//     { name: 'Степова', typeOfForest: ['Не визначається'] },
+//     { name: 'Напівпустельна', typeOfForest: ['Не визначається'] },
+
+// ]
+
+  // ********************** Додаємо дані до розрахунку комплексного показника
+
   @override
   Widget build(BuildContext context) {
+    var vegetation = context.watch<GetTypeOfVegetation>().getTypeOfVegetationf;
+
+    if (vegetation == 'Лісиста') {
+      typeOfForest = ['Хвойні', 'Змішані'];
+      valueForest = 'Хвойні';
+    } else if (vegetation == 'Лісисто-степова') {
+      typeOfForest = [
+        'Хвойні',
+        'Листяні',
+      ];
+      valueForest = 'Хвойні';
+    } else {
+      typeOfForest = ['Не визначається'];
+      valueForest = 'Не визначається';
+    }
+
     String startValue =
         context.watch<GetEmountNHR>().getEmountNHR.toStringAsFixed(0);
     return Scaffold(
@@ -280,7 +336,7 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                   child: SfSlider(
                     value: context.watch<GetTemperature>().getTemperature,
                     min: -30.0,
-                    max: 30.0,
+                    max: 40.0,
                     showLabels: true,
                     interval: 10,
                     showTicks: true,
@@ -309,61 +365,61 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                 )
               ],
             ),
-            Stack(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                      left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
-                  padding: const EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 75, 74, 74),
-                        width: 1,
-                      )),
-                  child: SfSlider(
-                    value: context.watch<GetCoefficient>().getCoefficient,
-                    min: 0.0,
-                    max: 1.0,
-                    showLabels: true,
-                    interval: 0.1,
-                    showTicks: true,
-                    enableTooltip: true,
-                    // ignore: non_constant_identifier_names
-                    onChanged: (dynamic NewValue) {
-                      setState(() {
-                        if (NewValue < 0.05) {
-                          context
-                              .read<GetCoefficient>()
-                              .changeCoefficient(0.05);
-                        } else {
-                          context
-                              .read<GetCoefficient>()
-                              .changeCoefficient(NewValue);
-                        }
-                      });
-                    },
-                  ),
-                ),
-                Positioned(
-                  left: 17,
-                  top: 4,
-                  // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    child: const Text(
-                      " Коефіцієнт впливу місцевості ",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 73, 73, 73),
-                        backgroundColor: Colors.white,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+            // Stack(
+            //   children: [
+            //     Container(
+            //       margin: const EdgeInsets.only(
+            //           left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
+            //       padding: const EdgeInsets.all(0),
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(5),
+            //           color: Colors.white,
+            //           border: Border.all(
+            //             color: const Color.fromARGB(255, 75, 74, 74),
+            //             width: 1,
+            //           )),
+            //       child: SfSlider(
+            //         value: context.watch<GetCoefficient>().getCoefficient,
+            //         min: 0.0,
+            //         max: 1.0,
+            //         showLabels: true,
+            //         interval: 0.1,
+            //         showTicks: true,
+            //         enableTooltip: true,
+            //         // ignore: non_constant_identifier_names
+            //         onChanged: (dynamic NewValue) {
+            //           setState(() {
+            //             if (NewValue < 0.05) {
+            //               context
+            //                   .read<GetCoefficient>()
+            //                   .changeCoefficient(0.05);
+            //             } else {
+            //               context
+            //                   .read<GetCoefficient>()
+            //                   .changeCoefficient(NewValue);
+            //             }
+            //           });
+            //         },
+            //       ),
+            //     ),
+            //     Positioned(
+            //       left: 17,
+            //       top: 4,
+            //       // ignore: avoid_unnecessary_containers
+            //       child: Container(
+            //         child: const Text(
+            //           " Коефіцієнт впливу місцевості ",
+            //           textAlign: TextAlign.left,
+            //           style: TextStyle(
+            //             color: Color.fromARGB(255, 73, 73, 73),
+            //             backgroundColor: Colors.white,
+            //             fontSize: 11,
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
             Stack(
               children: [
                 Container(
@@ -408,6 +464,150 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                   ),
                 ),
               ],
+            ),
+            Container(
+                margin: const EdgeInsets.only(
+                    left: 20.0, bottom: 0.0, top: 10.0, right: 20.0),
+                child: const Center(
+                  child: Text(
+                    'Визначення коефіцієнту впливу місцевості',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 9, 78, 134)),
+                  ),
+                )),
+            Container(
+                margin: const EdgeInsets.only(
+                    left: 20.0, bottom: 0.0, top: 0, right: 20.0),
+                child: const Center(
+                  child: Text(
+                    "обов'язково оберіть усі категорії!",
+                    style: TextStyle(
+                        fontSize: 10, color: Color.fromARGB(255, 255, 0, 0)),
+                  ),
+                )),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
+              child: DropdownButtonFormField(
+                borderRadius: BorderRadius.circular(10.0),
+                value: context.watch<GetSeason>().getSeason,
+                items: season.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) =>
+                    context.read<GetSeason>().changeSeason(newValue.toString()),
+                decoration: const InputDecoration(
+                  labelText: 'Пора року',
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                  ),
+                  contentPadding: EdgeInsets.only(
+                      left: 10.0, bottom: 5.0, top: 5.0, right: 10.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  isCollapsed: true,
+                ),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                dropdownColor: const Color.fromARGB(255, 227, 222, 235),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
+              child: DropdownButtonFormField(
+                borderRadius: BorderRadius.circular(10.0),
+                value: context.watch<GetRelief>().getRelief,
+                items: relief.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) =>
+                    context.read<GetRelief>().changeRelief(newValue.toString()),
+                decoration: const InputDecoration(
+                  labelText: 'Вид рельєфу',
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                  ),
+                  contentPadding: EdgeInsets.only(
+                      left: 10.0, bottom: 5.0, top: 5.0, right: 10.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  isCollapsed: true,
+                ),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                dropdownColor: const Color.fromARGB(255, 227, 222, 235),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
+              child: DropdownButtonFormField(
+                borderRadius: BorderRadius.circular(10.0),
+                value:
+                    context.watch<GetTypeOfVegetation>().getTypeOfVegetationf,
+                items: typeOfVegetation.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) => context
+                    .read<GetTypeOfVegetation>()
+                    .changeTypeOfVegetation(newValue.toString()),
+                decoration: const InputDecoration(
+                  labelText: 'Вид рослинності',
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                  ),
+                  contentPadding: EdgeInsets.only(
+                      left: 10.0, bottom: 5.0, top: 5.0, right: 10.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  isCollapsed: true,
+                ),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                dropdownColor: const Color.fromARGB(255, 227, 222, 235),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 10.0, bottom: 0.0, top: 10.0, right: 10.0),
+              child: DropdownButtonFormField(
+                borderRadius: BorderRadius.circular(10.0),
+                value: valueForest,
+                items: typeOfForest.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) => context
+                    .read<GetTypeOfForest>()
+                    .changeTypeOfForest(newValue.toString()),
+                decoration: const InputDecoration(
+                  labelText: 'Тип лісу',
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                  ),
+                  contentPadding: EdgeInsets.only(
+                      left: 10.0, bottom: 5.0, top: 5.0, right: 10.0),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  isCollapsed: true,
+                ),
+                icon: const Icon(Icons.keyboard_arrow_down),
+                dropdownColor: const Color.fromARGB(255, 227, 222, 235),
+              ),
             ),
             Stack(
               children: [
@@ -504,6 +704,7 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                     },
                   ),
                 );
+                // print(context.watch<GetTypeOfForest>().getTypeOfForest);
               },
               icon: const Icon(Icons.settings),
               label: const Text('Перейти до результатів'),

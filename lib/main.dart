@@ -101,6 +101,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<GetZoom>(
           create: (context) => GetZoom(),
         ),
+        ChangeNotifierProvider<GetSeason>(
+          create: (context) => GetSeason(),
+        ),
+        ChangeNotifierProvider<GetRelief>(
+          create: (context) => GetRelief(),
+        ),
+        ChangeNotifierProvider<GetTypeOfVegetation>(
+          create: (context) => GetTypeOfVegetation(),
+        ),
+        ChangeNotifierProvider<GetTypeOfForest>(
+          create: (context) => GetTypeOfForest(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

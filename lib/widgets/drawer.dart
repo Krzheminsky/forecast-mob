@@ -60,6 +60,31 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
         Card(
           elevation: 6,
           child: ListTile(
+            title: const Text('Поточні метеодані'),
+            subtitle: const Text(
+              'Отримання поточних метеоданих',
+              style: TextStyle(fontSize: 10),
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+            ),
+            dense: true,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ReceivingMeteorologicalData();
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+        Card(
+          elevation: 6,
+          child: ListTile(
             title: const Text('Вихідні дані'),
             subtitle: const Text(
               'Внесення відомостей щодо НХР',
@@ -176,27 +201,6 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
                 MaterialPageRoute(
                   builder: (context) {
                     return const InformationAboutChemikel();
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-        Card(
-          elevation: 6,
-          child: ListTile(
-            title: const Text('Поточні метеодані'),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              size: 14,
-            ),
-            dense: true,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ReceivingMeteorologicalData();
                   },
                 ),
               );
