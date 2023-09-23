@@ -48,7 +48,9 @@ class ReceivingMeteorologicalData extends StatelessWidget {
       winddirection = json["current_weather"]["winddirection"].toDouble();
 
       String currentTime = json["current_weather"]["time"];
-      var currentHourly = json["hourly"]["time"].indexOf(currentTime);
+      String newTime = currentTime.replaceRange(
+          currentTime.length - 2, currentTime.length, "00");
+      var currentHourly = json["hourly"]["time"].indexOf(newTime);
       double currentSoilTemperature =
           json["hourly"]["soil_temperature_0cm"][currentHourly];
       double currentTemperature =
