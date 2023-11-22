@@ -22,6 +22,9 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
     // ignore: unused_local_variable
 
     double? calcData;
+    double coefA = 0;
+    double coefB1 = 0;
+    double coefB2 = 0;
     double coeficientA = 0;
     double coeficientB1 = 0;
     double coeficientB2 = 0;
@@ -45,6 +48,7 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
     double areaPZHZ = 0;
     double complexIndicator = 0;
     double terrainInfluenceCoefficient = 0;
+    double amountEvaporated = 0;
 
     listChemicel() {
       String nameChimical = context.watch<GetNameChemical>().getName;
@@ -58,12 +62,55 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
           context.watch<GetVerticalStability>().getVerticalStability;
       Map<String, dynamic> vertStab = data.verticalStability[vertical];
       double vert = vertStab["param"];
-      double coefA = (0.57 * exp(0.86 * vert));
+
+// add change in formulas coefA coefB1 coefB2:
+      if (nameChimical == 'Хлор') {
+        if (vertical != 'конвекція') {
+          coefA = (0.57 * exp(0.86 * vert));
+        } else {
+          coefA = (0.57 * exp(0.86 * vert));
+        }
+      } else if (nameChimical == 'Аміак') {
+        if (vertical != 'конвекція') {
+          coefA = (0.57 * exp(0.86 * vert * 1.009));
+        } else {
+          coefA = (0.57 * exp(0.86 * vert * 0.88));
+        }
+      } else {
+        coefA = (0.57 * exp(0.86 * vert));
+      }
+
+      if (nameChimical == 'Хлор') {
+        if (vertical != 'конвекція') {
+          coefB1 = (17.43 * exp(6.96 * vert * 0.936));
+        } else {
+          coefB1 = (15.4 * exp(6.96 * vert * 0.89));
+        }
+      } else if (nameChimical == 'Аміак') {
+        if (vertical != 'конвекція') {
+          coefB1 = (16.3 * exp(6.96 * vert * 1.006));
+        } else {
+          coefB1 = (15.4 * exp(6.96 * vert * 0.91));
+        }
+      } else {
+        coefB1 = (15.4 * exp(6.96 * vert));
+      }
+
+      if (nameChimical == 'Хлор') {
+        coefB2 = (16.84 * exp(6.87 * vert));
+      } else if (nameChimical == 'Аміак') {
+        coefB2 = (16.84 * exp(6.87 * vert));
+      } else {
+        coefB2 = (16.84 * exp(6.87 * vert));
+      }
+      // double coefA = (0.57 * exp(0.86 * vert));
       coeficientA = coefA;
-      double coefB1 = (15.4 * exp(6.96 * vert));
+      // double coefB1 = (15.4 * exp(6.96 * vert));
       coeficientB1 = coefB1;
-      double coefB2 = (16.84 * exp(6.87 * vert));
+      // double coefB2 = (16.84 * exp(6.87 * vert));
       coeficientB2 = coefB2;
+
+      // add change in formulas coefA coefB1 coefB2:
 
       String probab = context.watch<GetProbability>().getProbability;
       Map<String, dynamic> probability = data.probability[probab];
@@ -146,9 +193,11 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
         evaporationRate = 0;
       } else {
         evaporationRate = (0.041 *
-            ((windSpeed * molWeight) / (pow(diameterArea, 0.14) * 273)) *
+            ((windSpeed * molWeight) /
+                (pow(diameterArea, 0.14) * (airTemperature + 273.15))) *
             exp((vaporisation * molWeight / 8.31) *
-                ((1 / (boilingPoint + 273)) - (1 / 273))));
+                ((1 / (boilingPoint + 273.15)) -
+                    (1 / (airTemperature + 273.15)))));
       }
 
       if (phis == 0) {
@@ -159,25 +208,122 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
       }
 
       num toxiCosis = mapChemical["toxiCosis"];
+
+      // correcting formula primaCloud
+
       if (windSpeed > 0) {
-        primaCloud = (coeficientB1 *
-            pow((primaryCloud / (1000 * windSpeed * toxiCosis)), coeficientA));
+        if (nameChimical == 'Хлор') {
+          if (windSpeed <= 1.5) {
+            primaCloud = (coeficientB1 *
+                pow((primaryCloud / (1000 * windSpeed * toxiCosis)),
+                    coeficientA));
+          } else {
+            primaCloud = 1.087 *
+                (coeficientB1 *
+                    pow((primaryCloud / (1000 * windSpeed * toxiCosis)),
+                        coeficientA));
+          }
+        } else if (nameChimical == 'Хлорціан') {
+          primaCloud = 1.483 *
+              (coeficientB1 *
+                  pow((primaryCloud / (1000 * windSpeed * toxiCosis)),
+                      coeficientA));
+        } else {
+          primaCloud = (coeficientB1 *
+              pow((primaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA));
+        }
       } else {
         primaCloud = (coeficientB1 *
             pow((primaryCloud / (1000 * 0.6 * toxiCosis)), coeficientA));
       }
+      // corrective formula primaCloud
 
+      // add amountEvaporated
+      amountEvaporated = evaporationRate *
+          24 *
+          3600 *
+          (3.14 * diameterArea * diameterArea / 4);
+      // add amountEvaporated
+
+      // correcting secCloud
       if (phis == 0) {
         secCloud = 0;
       } else if (phis == 1 && evaporationTime > 24) {
-        secCloud = coeficientB2 *
-            pow(24, -0.5) *
-            pow((secondaryCloud / (1000 * windSpeed * toxiCosis)), coeficientA);
+        if (nameChimical == 'Хлорпікрін') {
+          secCloud = 0.244 *
+              coeficientB2 *
+              pow(24, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else {
+          secCloud = coeficientB2 *
+              pow(24, -0.5) *
+              pow((amountEvaporated / (windSpeed * toxiCosis)), coeficientA);
+        }
       } else {
-        secCloud = coeficientB2 *
-            pow(evaporationTime, -0.5) *
-            pow((secondaryCloud / (1000 * windSpeed * toxiCosis)), coeficientA);
+        if (nameChimical == 'Хлор') {
+          secCloud = 0.419243 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Аміак') {
+          secCloud = 0.4333 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Формальдегід') {
+          secCloud = 0.82836 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Сірчистий ангідрид') {
+          secCloud = 0.61306 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Сірководень') {
+          secCloud = 0.51813 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Миш'яковистий водень") {
+          secCloud = 0.31646 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Бромоводень") {
+          secCloud = 0.2561 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Бромометан") {
+          secCloud = 0.7739 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Фтор") {
+          secCloud = 0.00000179243 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else {
+          secCloud = coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        }
       }
+      // correcting secCloud
 
       if (vert == -0.15 && prob == 0.5) {
         angleF2 = 20;

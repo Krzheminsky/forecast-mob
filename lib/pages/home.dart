@@ -7,6 +7,8 @@ import 'package:positioned_tap_detector_2/positioned_tap_detector_2.dart';
 import 'package:provider/provider.dart';
 import 'package:forecast/calculate/data_calculate.dart';
 import 'dart:math';
+import 'package:forecast/utils/scale_layer_plugin_option.dart';
+import 'package:forecast/utils/zoombuttons_plugin_option.dart';
 
 class HomePage extends StatelessWidget {
   static const String route = '/';
@@ -84,12 +86,12 @@ class HomePage extends StatelessWidget {
         for (var i = (0 - anglF1); i <= anglF1; i++) {
           latOne = lat +
               ((((primDepth + radAsid) * 1000) *
-                      cos((i + directionWind) * 3.1415 / 180)) /
+                      cos((i + directionWind + 180) * 3.1415 / 180)) /
                   (6371000 * 3.1415 / 180));
           lngOne = lng +
               (primDepth + radAsid) *
                   1000 *
-                  sin((i + directionWind) * 3.1415 / 180) /
+                  sin((i + directionWind + 180) * 3.1415 / 180) /
                   cos(lat * 3.1415 / 180) /
                   (6371000 * 3.1415 / 180);
           cloudeOne.add(LatLng(latOne, lngOne));
@@ -112,12 +114,12 @@ class HomePage extends StatelessWidget {
         for (var i = (0 - anglF2); i <= anglF2; i++) {
           latTwo = lat +
               ((((secDepth + radAsid) * 1000) *
-                      cos((i + directionWind) * 3.1415 / 180)) /
+                      cos((i + directionWind + 180) * 3.1415 / 180)) /
                   (6371000 * 3.1415 / 180));
           lngTwo = lng +
               (secDepth + radAsid) *
                   1000 *
-                  sin((i + directionWind) * 3.1415 / 180) /
+                  sin((i + directionWind + 180) * 3.1415 / 180) /
                   cos(lat * 3.1415 / 180) /
                   (6371000 * 3.1415 / 180);
           result.add(LatLng(latTwo, lngTwo));
@@ -161,6 +163,21 @@ class HomePage extends StatelessWidget {
                           .read<GetTappedPoints>()
                           .changeTappedPoints(latlng);
                     }),
+                nonRotatedChildren: [
+                  ScaleLayerWidget(
+                      options: ScaleLayerPluginOption(
+                    lineColor: const Color.fromARGB(255, 3, 7, 250),
+                    lineWidth: 2,
+                    textStyle: const TextStyle(
+                        color: Color.fromARGB(255, 0, 47, 255), fontSize: 12),
+                    padding: const EdgeInsets.all(10),
+                  )),
+                  const FlutterMapZoomButtons(
+                    mini: true,
+                    padding: 10,
+                    alignment: Alignment.bottomRight,
+                  ),
+                ],
                 children: [
                   TileLayer(
                     urlTemplate:

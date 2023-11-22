@@ -8,6 +8,7 @@ import 'package:forecast/pages/results_chemical_hazard.dart';
 
 import 'package:provider/provider.dart';
 import 'package:forecast/calculate/data_calculate.dart';
+import 'dart:math' as math;
 
 class EnterDataChemicals extends StatefulWidget {
   static const String route = 'EnterDataChemicals';
@@ -615,18 +616,31 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                        alignment: Alignment.centerRight,
+                        width: 90,
+                        height: 150,
+                        margin: const EdgeInsets.only(
+                            left: 10.0, bottom: 0.0, top: 15.0, right: 10.0),
+                        child: const Text('Напрямок вітру')),
+                    Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/roza_black.png'),
+                            fit: BoxFit.cover),
+                      ),
                       alignment: Alignment.topRight,
-                      width: 190,
+                      width: 150,
+                      height: 150,
                       margin: const EdgeInsets.only(
                           left: 10.0, bottom: 0.0, top: 15.0, right: 10.0),
                       child: SleekCircularSlider(
                         appearance: CircularSliderAppearance(
-                            size: 80,
+                            size: 150,
                             angleRange: 360,
                             startAngle: 270,
                             customWidths: CustomSliderWidths(
-                              progressBarWidth: 6,
-                              trackWidth: 6,
+                              progressBarWidth: 1,
+                              trackWidth: 1,
                               handlerSize: 10,
                             ),
                             customColors: CustomSliderColors(
@@ -639,7 +653,7 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                               mainLabelStyle: const TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                                fontSize: 18,
                               ),
                             )),
                         min: 0,
@@ -654,33 +668,21 @@ class _EnterDataChemicalsState extends State<EnterDataChemicals> {
                   ],
                 ),
                 Positioned(
-                  left: 20,
-                  top: 35,
+                  width: 120,
+                  height: 120,
+                  left: 135,
+                  top: 30,
                   // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    child: const Text(
-                      "Напрямок",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        // color: Color.fromARGB(255, 73, 73, 73),
-                        // backgroundColor: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 20,
-                  top: 55,
-                  // ignore: avoid_unnecessary_containers
-                  child: Container(
-                    child: const Text(
-                      "вітру",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        // color: Color.fromARGB(255, 73, 73, 73),
-                        // backgroundColor: Colors.white,
-                        fontSize: 16,
+                  child: Transform.rotate(
+                    angle: math.pi /
+                        180 *
+                        context.watch<GetWindDirection>().getWindDirection,
+                    child: SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Image.asset(
+                        'assets/images/arrow1.png',
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
