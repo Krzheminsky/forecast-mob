@@ -176,15 +176,23 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
 
       double palletHeight = context.watch<GetPalletHeight>().getPalletHeight;
       double density = mapChemical["density"];
-      if (palletHeight == 0) {
-        diameterArea = 5.04 * (sqrt((amountNHR - primaryCloud) / density));
-      } else if (palletHeight > 0 && amountNHR < 200000) {
-        diameterArea = 1.22 * (sqrt((amountNHR - primaryCloud) / density));
+
+      // correcting diameterArea
+      if (amountNHR <= 2000000) {
+        if (palletHeight == 0) {
+          diameterArea = 5.04 * (sqrt((amountNHR - primaryCloud) / density));
+        } else {
+          diameterArea = 1.22 * (sqrt((amountNHR - primaryCloud) / density));
+        }
       } else {
-        diameterArea = 1.22 /
-            sqrt(palletHeight) *
-            (sqrt((amountNHR - primaryCloud) / density));
+        if (palletHeight == 0) {
+          diameterArea = 5.04 * (sqrt((amountNHR - primaryCloud) / density));
+        } else {
+          diameterArea = (1.22 / sqrt(palletHeight)) *
+              (sqrt((amountNHR - primaryCloud) / density));
+        }
       }
+      // correcting diameterArea
 
       double surfaceArea = 3.1415 * diameterArea * diameterArea / 4;
 
@@ -254,6 +262,60 @@ class _ResultsChemicalHazardState extends State<ResultsChemicalHazard> {
           secCloud = 0.244 *
               coeficientB2 *
               pow(24, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Аміак') {
+          secCloud = 0.4333 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Хлор') {
+          secCloud = 0.419243 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Формальдегід') {
+          secCloud = 0.82836 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Сірчистий ангідрид') {
+          secCloud = 0.61306 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == 'Сірководень') {
+          secCloud = 0.51813 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Миш'яковистий водень") {
+          secCloud = 0.31646 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Бромоводень") {
+          secCloud = 0.2561 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Бромометан") {
+          secCloud = 0.7739 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
+              pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
+                  coeficientA);
+        } else if (nameChimical == "Фтор") {
+          secCloud = 0.00000179243 *
+              coeficientB2 *
+              pow(evaporationTime, -0.5) *
               pow((secondaryCloud / (1000 * windSpeed * toxiCosis)),
                   coeficientA);
         } else {
